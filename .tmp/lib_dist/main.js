@@ -1,5 +1,5 @@
 (function() {
-  define(["backbone"], function(Backbone) {
+  define('app/models/todo', ["backbone"], function(Backbone) {
     var todo;
     todo = Backbone.Model.extend({
       defaults: {

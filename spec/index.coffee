@@ -1,3 +1,3 @@
 define ->
   # Here is the list of spec
-  specs: ["spec/todo_spec"]
+  specs: ["spec/models/todo_spec"]

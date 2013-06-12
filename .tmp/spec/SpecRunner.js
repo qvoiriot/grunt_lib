@@ -1,13 +1,12 @@
 (function() {
   require.config({
-    baseUrl: "/app",
     urlArgs: "cb=" + Math.random(),
     paths: {
       jquery: "../vendor/jquery",
       underscore: "../vendor/underscore",
       backbone: "../vendor/backbone",
-      spec: "../spec/",
-      app: "../app/"
+      spec: "../spec",
+      app: "../lib_dist"
     },
     shim: {
       backbone: {
@@ -17,7 +16,7 @@
     }
   });
 
-  require(["jquery", "spec/index"], function($, index) {
+  require(["jquery", "spec/index", "spec/spec", "app/main"], function($, index) {
     var htmlReporter, jasmineEnv;
     jasmineEnv = jasmine.getEnv();
     htmlReporter = new jasmine.HtmlReporter();

@@ -1,19 +1,18 @@
 require.config
-  baseUrl:"/app"
   urlArgs: "cb=" + Math.random()
   paths:
     jquery: "../vendor/jquery"
     underscore: "../vendor/underscore"
     backbone: "../vendor/backbone"
-    spec: "../spec/"
-    app: "../app/"
+    spec: "../spec"
+    app: "../lib_dist"
 
   shim:
     backbone:
       deps: ["underscore", "jquery"]
       exports: "Backbone"
 
-require ["jquery", "spec/index"], ($, index) ->
+require ["jquery", "spec/index", "spec/spec", "app/main"], ($, index) ->
   jasmineEnv = jasmine.getEnv()
   htmlReporter = new jasmine.HtmlReporter()
   jasmineEnv.addReporter htmlReporter

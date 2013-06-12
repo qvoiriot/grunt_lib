@@ -1,7 +1,7 @@
 (function() {
   define(function() {
     return {
-      specs: ["spec/todo_spec"]
+      specs: ["spec/models/todo_spec"]
     };
   });
 

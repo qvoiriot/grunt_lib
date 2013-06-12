@@ -17,17 +17,19 @@ module.exports = (grunt) ->
 
 
   grunt.initConfig
+    options:
+      outputName: 'main.js'
+
     coffee:
       compile:
         options:
           sourceMap: false
           join     : false
         files:
-          'lib_dist/main.js': 'app/*.coffee'
-          '.tmp/app/todo.js': 'app/todo.coffee'
+          'lib_dist/<%= options.outputName %>': 'app/**/*.coffee'
           '.tmp/spec/index.js': 'spec/index.coffee'
           '.tmp/spec/SpecRunner.js': 'spec/SpecRunner.coffee'
-          '.tmp/spec/todo_spec.js': 'spec/todo_spec.coffee'
+          '.tmp/spec/spec.js': 'spec/*/**/*.coffee'
 
     connect:
       server:
@@ -40,23 +42,21 @@ module.exports = (grunt) ->
         files: [
           expand: true
           src: [
-            'vendor/*',
+            'vendor/*'
             'spec/index.html'
+            'lib_dist/*'
           ]
           dest: '.tmp/'
         ]
 
     clean: [
-      'lib_dist/*'
-      '.tmp/vendor/*',
-      '.tmp/spec/*',
-      '.tmp/app/*'
+      '.tmp/**/*'
     ]
 
     watch:
       scripts:
-        files: ['spec/*.coffee', 'app/*.coffee', 'vendor/jasmine-html.js']
-        tasks: ['exec','notify:Watch_done']
+        files: ['spec/*', 'app/*', 'vendor/*']
+        tasks: ['exec','notify:watch_done']
 
     exec:
       jasmine:
@@ -64,14 +64,14 @@ module.exports = (grunt) ->
         stdout: true
 
     notify:
-      Spec_done:
+      spec_done:
         options:
-          title: "Notification"
-          message: "Good Job Test are DONE !!!"
+          title: "Notification SUCCESS"
+          message: "Good Job EXEC TEST are DONE !!!"
 
-      Watch_done:
+      watch_done:
         options:
-          title: "Notification"
-          message: "Good Job Re-Build DONE !!!"
+          title: "Notification SUCCESS"
+          message: "SAVE & Rebuild DONE !!!"
 
-  grunt.registerTask 'default', ['clean', 'copy', 'coffee','connect','exec','notify:Spec_done','watch','notify:Watch_done']
+  grunt.registerTask 'default', ['clean', 'coffee', 'copy', 'connect', 'exec', 'notify:spec_done', 'watch', 'notify:watch_done']
