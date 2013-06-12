@@ -12,8 +12,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-clean')
+  grunt.loadNpmTasks('grunt-notify')
   grunt.loadNpmTasks('grunt-exec')
-  grunt.loadNpmTasks('grunt-reload')
 
 
   grunt.initConfig
@@ -29,16 +29,11 @@ module.exports = (grunt) ->
           '.tmp/spec/SpecRunner.js': 'spec/SpecRunner.coffee'
           '.tmp/spec/todo_spec.js': 'spec/todo_spec.coffee'
 
-
     connect:
       server:
         options:
           port: 8000
           base: './.tmp'
-
-
-    reload:
-      port: 8000
 
     copy:
       main:
@@ -51,22 +46,32 @@ module.exports = (grunt) ->
           dest: '.tmp/'
         ]
 
-    clean:
-      [
-        'lib_dist/*'
-        '.tmp/vendor/*',
-        '.tmp/spec/*',
-        '.tmp/app/*'
-      ]
+    clean: [
+      'lib_dist/*'
+      '.tmp/vendor/*',
+      '.tmp/spec/*',
+      '.tmp/app/*'
+    ]
 
     watch:
       scripts:
         files: ['spec/*.coffee', 'app/*.coffee', 'vendor/jasmine-html.js']
-        tasks: ['exec' , 'reload']
+        tasks: ['exec','notify:Watch_done']
 
     exec:
       jasmine:
         command: "phantomjs vendor/run-jasmine.js http://localhost:8000/spec"
         stdout: true
 
-  grunt.registerTask 'default', ['clean', 'copy', 'coffee', 'connect', 'exec', 'watch', 'reload']
+    notify:
+      Spec_done:
+        options:
+          title: "Notification"
+          message: "Good Job Test are DONE !!!"
+
+      Watch_done:
+        options:
+          title: "Notification"
+          message: "Good Job Re-Build DONE !!!"
+
+  grunt.registerTask 'default', ['clean', 'copy', 'coffee','connect','exec','notify:Spec_done','watch','notify:Watch_done']
